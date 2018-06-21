@@ -145,6 +145,7 @@ var oop = require("../lib/oop");
 var TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
 
 var TclHighlightRules = function() {
+
     this.$rules = {
         "start" : [
            {

@@ -102,6 +102,7 @@ var TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
 var LaTeXHighlightRules = require("./latex_highlight_rules");
 
 var RDocHighlightRules = function() {
+
     this.$rules = {
         "start" : [
             {

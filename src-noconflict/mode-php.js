@@ -1,4 +1,4 @@
-ace.define("ace/mode/doc_comment_highlight_rules",[], function(require, exports, module) {
+ace.define("ace/mode/doc_comment_highlight_rules",["require","exports","module","ace/lib/oop","ace/mode/text_highlight_rules"], function(require, exports, module) {
 "use strict";
 
 var oop = require("../lib/oop");
@@ -48,7 +48,7 @@ exports.DocCommentHighlightRules = DocCommentHighlightRules;
 
 });
 
-ace.define("ace/mode/css_highlight_rules",[], function(require, exports, module) {
+ace.define("ace/mode/css_highlight_rules",["require","exports","module","ace/lib/oop","ace/lib/lang","ace/mode/text_highlight_rules"], function(require, exports, module) {
 "use strict";
 
 var oop = require("../lib/oop");
@@ -73,6 +73,7 @@ var CssHighlightRules = function() {
         "support.constant.color": supportConstantColor,
         "support.constant.fonts": supportConstantFonts
     }, "text", true);
+
     this.$rules = {
         "start" : [{
             include : ["strings", "url", "comments"]
@@ -242,7 +243,7 @@ exports.CssHighlightRules = CssHighlightRules;
 
 });
 
-ace.define("ace/mode/javascript_highlight_rules",[], function(require, exports, module) {
+ace.define("ace/mode/javascript_highlight_rules",["require","exports","module","ace/lib/oop","ace/mode/doc_comment_highlight_rules","ace/mode/text_highlight_rules"], function(require, exports, module) {
 "use strict";
 
 var oop = require("../lib/oop");
@@ -286,6 +287,7 @@ var JavaScriptHighlightRules = function(options) {
         "3[0-7][0-7]?|" + // oct
         "[4-7][0-7]?|" + //oct
         ".)";
+
     this.$rules = {
         "no_regex" : [
             DocCommentHighlightRules.getStartRule("doc-start"),
@@ -714,7 +716,7 @@ function comments(next) {
 exports.JavaScriptHighlightRules = JavaScriptHighlightRules;
 });
 
-ace.define("ace/mode/xml_highlight_rules",[], function(require, exports, module) {
+ace.define("ace/mode/xml_highlight_rules",["require","exports","module","ace/lib/oop","ace/mode/text_highlight_rules"], function(require, exports, module) {
 "use strict";
 
 var oop = require("../lib/oop");
@@ -917,7 +919,7 @@ oop.inherits(XmlHighlightRules, TextHighlightRules);
 exports.XmlHighlightRules = XmlHighlightRules;
 });
 
-ace.define("ace/mode/html_highlight_rules",[], function(require, exports, module) {
+ace.define("ace/mode/html_highlight_rules",["require","exports","module","ace/lib/oop","ace/lib/lang","ace/mode/css_highlight_rules","ace/mode/javascript_highlight_rules","ace/mode/xml_highlight_rules"], function(require, exports, module) {
 "use strict";
 
 var oop = require("../lib/oop");
@@ -999,7 +1001,7 @@ oop.inherits(HtmlHighlightRules, XmlHighlightRules);
 exports.HtmlHighlightRules = HtmlHighlightRules;
 });
 
-ace.define("ace/mode/php_highlight_rules",[], function(require, exports, module) {
+ace.define("ace/mode/php_highlight_rules",["require","exports","module","ace/lib/oop","ace/lib/lang","ace/mode/doc_comment_highlight_rules","ace/mode/text_highlight_rules","ace/mode/html_highlight_rules"], function(require, exports, module) {
 "use strict";
 
 var oop = require("../lib/oop");
@@ -1869,6 +1871,7 @@ var PhpLangHighlightRules = function() {
     );
 
     var futureReserved = lang.arrayToMap([]);
+
     this.$rules = {
         "start" : [
             {
@@ -2061,7 +2064,7 @@ exports.PhpHighlightRules = PhpHighlightRules;
 exports.PhpLangHighlightRules = PhpLangHighlightRules;
 });
 
-ace.define("ace/mode/matching_brace_outdent",[], function(require, exports, module) {
+ace.define("ace/mode/matching_brace_outdent",["require","exports","module","ace/range"], function(require, exports, module) {
 "use strict";
 
 var Range = require("../range").Range;
@@ -2101,7 +2104,7 @@ var MatchingBraceOutdent = function() {};
 exports.MatchingBraceOutdent = MatchingBraceOutdent;
 });
 
-ace.define("ace/mode/php_completions",[], function(require, exports, module) {
+ace.define("ace/mode/php_completions",["require","exports","module"], function(require, exports, module) {
 "use strict";
 
 var functionMap = {
@@ -3243,194 +3246,7 @@ var functionMap = {
     ],
     "debug_print_backtrace": [
         "void debug_print_backtrace(void) */",
-        "ZEND_FUNCTION(debug_print_backtrace) {  zend_execute_data *ptr, *skip;  int lineno;  char *function_name;  char *filename;  char *class_name = NULL;  char *call_type;  char *include_filename = NULL;  zval *arg_array = NULL;  int indent = 0;   if (zend_parse_parameters_none() == FAILURE) {   return;  }   ptr = EG(current_execute_data);   /* skip debug_backtrace()"
-    ],
-    "debug_zval_dump": [
-        "void debug_zval_dump(mixed var)",
-        "Dumps a string representation of an internal zend value to output."
-    ],
-    "decbin": [
-        "string decbin(int decimal_number)",
-        "Returns a string containing a binary representation of the number"
-    ],
-    "dechex": [
-        "string dechex(int decimal_number)",
-        "Returns a string containing a hexadecimal representation of the given number"
-    ],
-    "decoct": [
-        "string decoct(int decimal_number)",
-        "Returns a string containing an octal representation of the given number"
-    ],
-    "define": [
-        "bool define(string constant_name, mixed value, boolean case_insensitive=false)",
-        "Define a new constant"
-    ],
-    "define_syslog_variables": [
-        "void define_syslog_variables(void)",
-        "Initializes all syslog-related variables"
-    ],
-    "defined": [
-        "bool defined(string constant_name)",
-        "Check whether a constant exists"
-    ],
-    "deg2rad": [
-        "float deg2rad(float number)",
-        "Converts the number in degrees to the radian equivalent"
-    ],
-    "dgettext": [
-        "string dgettext(string domain_name, string msgid)",
-        "Return the translation of msgid for domain_name, or msgid unaltered if a translation does not exist"
-    ],
-    "die": [
-        "void die([mixed status])",
-        "Output a message and terminate the current script"
-    ],
-    "dir": [
-        "object dir(string directory[, resource context])",
-        "Directory class with properties, handle and class and methods read, rewind and close"
-    ],
-    "dirname": [
-        "string dirname(string path)",
-        "Returns the directory name component of the path"
-    ],
-    "disk_free_space": [
-        "float disk_free_space(string path)",
-        "Get free disk space for filesystem that path is on"
-    ],
-    "disk_total_space": [
-        "float disk_total_space(string path)",
-        "Get total disk space for filesystem that path is on"
-    ],
-    "display_disabled_function": [
-        "void display_disabled_function(void)",
-        "Dummy function which displays an error when a disabled function is called."
-    ],
-    "dl": [
-        "int dl(string extension_filename)",
-        "Load a PHP extension at runtime"
-    ],
-    "dngettext": [
-        "string dngettext (string domain, string msgid1, string msgid2, int count)",
-        "Plural version of dgettext()"
-    ],
-    "dns_check_record": [
-        "bool dns_check_record(string host [, string type])",
-        "Check DNS records corresponding to a given Internet host name or IP address"
-    ],
-    "dns_get_mx": [
-        "bool dns_get_mx(string hostname, array mxhosts [, array weight])",
-        "Get MX records corresponding to a given Internet host name"
-    ],
-    "dns_get_record": [
-        "array|false dns_get_record(string hostname [, int type[, array authns, array addtl]])",
-        "Get any Resource Record corresponding to a given Internet host name"
-    ],
-    "dom_attr_is_id": [
-        "boolean dom_attr_is_id();",
-        "URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#Attr-isId Since: DOM Level 3"
-    ],
-    "dom_characterdata_append_data": [
-        "void dom_characterdata_append_data(string arg);",
-        "URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-32791A2F Since:"
-    ],
-    "dom_characterdata_delete_data": [
-        "void dom_characterdata_delete_data(int offset, int count);",
-        "URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-7C603781 Since:"
-    ],
-    "dom_characterdata_insert_data": [
-        "void dom_characterdata_insert_data(int offset, string arg);",
-        "URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-3EDB695F Since:"
-    ],
-    "dom_characterdata_replace_data": [
-        "void dom_characterdata_replace_data(int offset, int count, string arg);",
-        "URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-E5CBA7FB Since:"
-    ],
-    "dom_characterdata_substring_data": [
-        "string dom_characterdata_substring_data(int offset, int count);",
-        "URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-6531BCCF Since:"
-    ],
-    "dom_document_adopt_node": [
-        "DOMNode dom_document_adopt_node(DOMNode source);",
-        "URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-Document3-adoptNode Since: DOM Level 3"
-    ],
-    "dom_document_create_attribute": [
-        "DOMAttr dom_document_create_attribute(string name);",
-        "URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-1084891198 Since:"
-    ],
-    "dom_document_create_attribute_ns": [
-        "DOMAttr dom_document_create_attribute_ns(string namespaceURI, string qualifiedName);",
-        "URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-DocCrAttrNS Since: DOM Level 2"
-    ],
-    "dom_document_create_cdatasection": [
-        "DOMCdataSection dom_document_create_cdatasection(string data);",
-        "URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-D26C0AF8 Since:"
-    ],
-    "dom_document_create_comment": [
-        "DOMComment dom_document_create_comment(string data);",
-        "URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-1334481328 Since:"
-    ],
-    "dom_document_create_document_fragment": [
-        "DOMDocumentFragment dom_document_create_document_fragment();",
-        "URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-35CB04B5 Since:"
-    ],
-    "dom_document_create_element": [
-        "DOMElement dom_document_create_element(string tagName [, string value]);",
-        "URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-2141741547 Since:"
-    ],
-    "dom_document_create_element_ns": [
-        "DOMElement dom_document_create_element_ns(string namespaceURI, string qualifiedName [,string value]);",
-        "URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-DocCrElNS Since: DOM Level 2"
-    ],
-    "dom_document_create_entity_reference": [
-        "DOMEntityReference dom_document_create_entity_reference(string name);",
-        "URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-392B75AE Since:"
-    ],
-    "dom_document_create_processing_instruction": [
-        "DOMProcessingInstruction dom_document_create_processing_instruction(string target, string data);",
-        "URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-135944439 Since:"
-    ],
-    "dom_document_create_text_node": [
-        "DOMText dom_document_create_text_node(string data);",
-        "URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-1975348127 Since:"
-    ],
-    "dom_document_get_element_by_id": [
-        "DOMElement dom_document_get_element_by_id(string elementId);",
-        "URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-getElBId Since: DOM Level 2"
-    ],
-    "dom_document_get_elements_by_tag_name": [
-        "DOMNodeList dom_document_get_elements_by_tag_name(string tagname);",
-        "URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-A6C9094 Since:"
-    ],
-    "dom_document_get_elements_by_tag_name_ns": [
-        "DOMNodeList dom_document_get_elements_by_tag_name_ns(string namespaceURI, string localName);",
-        "URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-getElBTNNS Since: DOM Level 2"
-    ],
-    "dom_document_import_node": [
-        "DOMNode dom_document_import_node(DOMNode importedNode, boolean deep);",
-        "URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#Core-Document-importNode Since: DOM Level 2"
-    ],
-    "dom_document_load": [
-        "DOMNode dom_document_load(string source [, int options]);",
-        "URL: http://www.w3.org/TR/DOM-Level-3-LS/load-save.html#LS-DocumentLS-load Since: DOM Level 3"
-    ],
-    "dom_document_load_html": [
-        "DOMNode dom_document_load_html(string source);",
-        "Since: DOM extended"
-    ],
-    "dom_document_load_html_file": [
-        "DOMNode dom_document_load_html_file(string source);",
-        "Since: DOM extended"
-    ],
-    "dom_document_loadxml": [
-        "DOMNode dom_document_loadxml(string source [, int options]);",
-        "URL: http://www.w3.org/TR/DOM-Level-3-LS/load-save.html#LS-DocumentLS-loadXML Since: DOM Level 3"
-    ],
-    "dom_document_normalize_document": [
-        "void dom_document_normalize_document();",
-        "URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-Document3-normalizeDocument Since: DOM Level 3"
-    ],
-    "dom_document_relaxNG_validate_file": [
-        "boolean dom_document_relaxNG_validate_file(string filename); */",
+        "ZEND_FUNCTION(debug_print_backtrace) {  zend_execute_data *ptr, *skip;  int lineno;  char *function_name;  char *filename;  char *class_name = NULL;  char *call_type;  char *include_filename = NULL;  zval *arg_array = NULL;  int indent = 0;   if (zend_parse_parameters_none() == FAILURE) {   return;  }   ptr = EG(current_execute_data);",
         "PHP_FUNCTION(dom_document_relaxNG_validate_file) {  _dom_document_relaxNG_validate(INTERNAL_FUNCTION_PARAM_PASSTHRU, DOM_LOAD_FILE); } /* }}} end dom_document_relaxNG_validate_file"
     ],
     "dom_document_relaxNG_validate_xml": [
@@ -11490,7 +11306,7 @@ var PhpCompletions = function() {
 exports.PhpCompletions = PhpCompletions;
 });
 
-ace.define("ace/mode/folding/cstyle",[], function(require, exports, module) {
+ace.define("ace/mode/folding/cstyle",["require","exports","module","ace/lib/oop","ace/range","ace/mode/folding/fold_mode"], function(require, exports, module) {
 "use strict";
 
 var oop = require("../../lib/oop");
@@ -11630,7 +11446,7 @@ oop.inherits(FoldMode, BaseFoldMode);
 
 });
 
-ace.define("ace/mode/javascript",[], function(require, exports, module) {
+ace.define("ace/mode/javascript",["require","exports","module","ace/lib/oop","ace/mode/text","ace/mode/javascript_highlight_rules","ace/mode/matching_brace_outdent","ace/worker/worker_client","ace/mode/behaviour/cstyle","ace/mode/folding/cstyle"], function(require, exports, module) {
 "use strict";
 
 var oop = require("../lib/oop");
@@ -11717,7 +11533,7 @@ oop.inherits(Mode, TextMode);
 exports.Mode = Mode;
 });
 
-ace.define("ace/mode/css_completions",[], function(require, exports, module) {
+ace.define("ace/mode/css_completions",["require","exports","module"], function(require, exports, module) {
 "use strict";
 
 var propertyMap = {
@@ -11891,7 +11707,7 @@ var CssCompletions = function() {
 exports.CssCompletions = CssCompletions;
 });
 
-ace.define("ace/mode/behaviour/css",[], function(require, exports, module) {
+ace.define("ace/mode/behaviour/css",["require","exports","module","ace/lib/oop","ace/mode/behaviour","ace/mode/behaviour/cstyle","ace/token_iterator"], function(require, exports, module) {
 "use strict";
 
 var oop = require("../../lib/oop");
@@ -11984,7 +11800,7 @@ oop.inherits(CssBehaviour, CstyleBehaviour);
 exports.CssBehaviour = CssBehaviour;
 });
 
-ace.define("ace/mode/css",[], function(require, exports, module) {
+ace.define("ace/mode/css",["require","exports","module","ace/lib/oop","ace/mode/text","ace/mode/css_highlight_rules","ace/mode/matching_brace_outdent","ace/worker/worker_client","ace/mode/css_completions","ace/mode/behaviour/css","ace/mode/folding/cstyle"], function(require, exports, module) {
 "use strict";
 
 var oop = require("../lib/oop");
@@ -12059,7 +11875,7 @@ exports.Mode = Mode;
 
 });
 
-ace.define("ace/mode/behaviour/xml",[], function(require, exports, module) {
+ace.define("ace/mode/behaviour/xml",["require","exports","module","ace/lib/oop","ace/mode/behaviour","ace/token_iterator","ace/lib/lang"], function(require, exports, module) {
 "use strict";
 
 var oop = require("../../lib/oop");
@@ -12231,7 +12047,7 @@ oop.inherits(XmlBehaviour, Behaviour);
 exports.XmlBehaviour = XmlBehaviour;
 });
 
-ace.define("ace/mode/folding/mixed",[], function(require, exports, module) {
+ace.define("ace/mode/folding/mixed",["require","exports","module","ace/lib/oop","ace/mode/folding/fold_mode"], function(require, exports, module) {
 "use strict";
 
 var oop = require("../../lib/oop");
@@ -12285,7 +12101,7 @@ oop.inherits(FoldMode, BaseFoldMode);
 
 });
 
-ace.define("ace/mode/folding/xml",[], function(require, exports, module) {
+ace.define("ace/mode/folding/xml",["require","exports","module","ace/lib/oop","ace/lib/lang","ace/range","ace/mode/folding/fold_mode","ace/token_iterator"], function(require, exports, module) {
 "use strict";
 
 var oop = require("../../lib/oop");
@@ -12534,7 +12350,7 @@ function is(token, type) {
 
 });
 
-ace.define("ace/mode/folding/html",[], function(require, exports, module) {
+ace.define("ace/mode/folding/html",["require","exports","module","ace/lib/oop","ace/mode/folding/mixed","ace/mode/folding/xml","ace/mode/folding/cstyle"], function(require, exports, module) {
 "use strict";
 
 var oop = require("../../lib/oop");
@@ -12553,7 +12369,7 @@ oop.inherits(FoldMode, MixedFoldMode);
 
 });
 
-ace.define("ace/mode/html_completions",[], function(require, exports, module) {
+ace.define("ace/mode/html_completions",["require","exports","module","ace/token_iterator"], function(require, exports, module) {
 "use strict";
 
 var TokenIterator = require("../token_iterator").TokenIterator;
@@ -12875,7 +12691,7 @@ var HtmlCompletions = function() {
 exports.HtmlCompletions = HtmlCompletions;
 });
 
-ace.define("ace/mode/html",[], function(require, exports, module) {
+ace.define("ace/mode/html",["require","exports","module","ace/lib/oop","ace/lib/lang","ace/mode/text","ace/mode/javascript","ace/mode/css","ace/mode/html_highlight_rules","ace/mode/behaviour/xml","ace/mode/folding/html","ace/mode/html_completions","ace/worker/worker_client"], function(require, exports, module) {
 "use strict";
 
 var oop = require("../lib/oop");
@@ -12950,7 +12766,7 @@ oop.inherits(Mode, TextMode);
 exports.Mode = Mode;
 });
 
-ace.define("ace/mode/php",[], function(require, exports, module) {
+ace.define("ace/mode/php",["require","exports","module","ace/lib/oop","ace/mode/text","ace/mode/php_highlight_rules","ace/mode/php_highlight_rules","ace/mode/matching_brace_outdent","ace/range","ace/worker/worker_client","ace/mode/php_completions","ace/mode/behaviour/cstyle","ace/mode/folding/cstyle","ace/unicode","ace/mode/html","ace/mode/javascript","ace/mode/css"], function(require, exports, module) {
 "use strict";
 
 var oop = require("../lib/oop");

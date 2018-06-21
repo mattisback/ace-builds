@@ -1,4 +1,4 @@
-ace.define("ace/ext/menu_tools/overlay_page",[], function(require, exports, module) {
+ace.define("ace/ext/menu_tools/overlay_page",["require","exports","module","ace/lib/dom"], function(require, exports, module) {
 'use strict';
 var dom = require("../../lib/dom");
 var cssText = "#ace_settingsmenu, #kbshortcutmenu {\
@@ -114,7 +114,7 @@ module.exports.overlayPage = function overlayPage(editor, contentElement, top, r
 
 });
 
-ace.define("ace/ext/modelist",[], function(require, exports, module) {
+ace.define("ace/ext/modelist",["require","exports","module"], function(require, exports, module) {
 "use strict";
 
 var modes = [];
@@ -329,7 +329,7 @@ module.exports = {
 
 });
 
-ace.define("ace/ext/themelist",[], function(require, exports, module) {
+ace.define("ace/ext/themelist",["require","exports","module","ace/lib/fixoldbrowsers"], function(require, exports, module) {
 "use strict";
 require("ace/lib/fixoldbrowsers");
 
@@ -389,7 +389,7 @@ exports.themes = themeData.map(function(data) {
 
 });
 
-ace.define("ace/ext/options",[], function(require, exports, module) {
+ace.define("ace/ext/options",["require","exports","module","ace/ext/menu_tools/overlay_page","ace/lib/dom","ace/lib/oop","ace/lib/event_emitter","ace/ext/modelist","ace/ext/themelist"], function(require, exports, module) {
 "use strict";
 var overlayPage = require('./menu_tools/overlay_page').overlayPage;
 
@@ -447,8 +447,8 @@ var optionGroups = {
             path: "wrap",
             items: [
                { caption : "Off",  value : "off" },
-               { caption : "Free", value : "free" },
-               { caption : "80",   value : "80" },
+               { caption : "View", value : "free" },
+               { caption : "margin", value : "printMargin" },
                { caption : "40",   value : "40" }
             ]
         },
@@ -518,6 +518,15 @@ var optionGroups = {
         },
         "Show Gutter": {
             path: "showGutter"
+        },
+        "Show Line Numbers": {
+            path: "showLineNumbers"
+        },
+        "Relative Line Numbers": {
+            path: "relativeLineNumbers"
+        },
+        "Fixed Gutter Width": {
+            path: "fixedWidthGutter"
         },
         "Show Print Margin": [{
             path: "showPrintMargin"

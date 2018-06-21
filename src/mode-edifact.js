@@ -98,6 +98,7 @@ define("ace/mode/edifact_highlight_rules",["require","exports","module","ace/lib
             "constant.language": buildinConstants,
             "support.function": langClasses
         }, "identifier");
+    
         this.$rules = {
             "start" : [
                 {

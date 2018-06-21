@@ -5,6 +5,7 @@ var oop = require("../lib/oop");
 var TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
 
 var BroHighlightRules = function() {
+
     this.$rules = {
         start: [{
             token: "punctuation.definition.comment.bro",

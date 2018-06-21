@@ -79,6 +79,7 @@ var ElasticTabstopsLite = function(editor) {
 
     this.$cellWidthsForRow = function(row) {
         var selectionColumns = this.$selectionColumnsForRow(row);
+
         var tabs = [-1].concat(this.$tabsForRow(row));
         var widths = tabs.map(function(el) { return 0; } ).slice(1);
         var line = this.$editor.session.getLine(row);

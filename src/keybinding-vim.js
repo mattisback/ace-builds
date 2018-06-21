@@ -4020,8 +4020,10 @@ dom.importCssString(".normal-mode .ace_cursor{\
         cm.openDialog(template, onClose, { bottom: true, value: options.value,
             onKeyDown: options.onKeyDown, onKeyUp: options.onKeyUp,
             selectValueOnOpen: false, onClose: function() {
-              cm.state.vim.status = "";
-              cm.ace.renderer.$loop.schedule(cm.ace.renderer.CHANGE_CURSOR);
+              if (cm.state.vim) {
+                cm.state.vim.status = "";
+                cm.ace.renderer.$loop.schedule(cm.ace.renderer.CHANGE_CURSOR);
+              }
             }});
       }
       else {
@@ -5449,7 +5451,7 @@ dom.importCssString(".normal-mode .ace_cursor{\
   var getVim = Vim.maybeInitVimState_;
   exports.handler = {
     $id: "ace/keyboard/vim",
-    drawCursor: function(style, pixelPos, config, sel, session) {
+    drawCursor: function(element, pixelPos, config, sel, session) {
       var vim = this.state.vim || {};
       var w = config.characterWidth;
       var h = config.lineHeight;
@@ -5466,10 +5468,9 @@ dom.importCssString(".normal-mode .ace_cursor{\
         h = h / 2;
         top += h;
       }
-      style.left = left + "px";
-      style.top =  top + "px";
-      style.width = w + "px";
-      style.height = h + "px";
+      dom.translate(element, left, top);
+      dom.setStyle(element.style, "width", w + "px");
+      dom.setStyle(element.style, "height", h + "px");
     },
     handleKeyboard: function(data, hashId, key, keyCode, e) {
       var editor = data.editor;
@@ -5631,25 +5632,6 @@ dom.importCssString(".normal-mode .ace_cursor{\
           editor.onCompositionStartOrig = null;
         }
       }
-    }
-  };
-  var renderVirtualNumbers = {
-    getText: function(session, row) {
-      return (Math.abs(session.selection.lead.row - row)  || (row + 1 + (row < 9? "\xb7" : "" ))) + "";
-    },
-    getWidth: function(session, lastLineNumber, config) {
-      return session.getLength().toString().length * config.characterWidth;
-    },
-    update: function(e, editor) {
-      editor.renderer.$loop.schedule(editor.renderer.CHANGE_GUTTER);
-    },
-    attach: function(editor) {
-      editor.renderer.$gutterLayer.$renderer = this;
-      editor.on("changeSelection", this.update);
-    },
-    detach: function(editor) {
-      editor.renderer.$gutterLayer.$renderer = null;
-      editor.off("changeSelection", this.update);
     }
   };
   Vim.defineOption({

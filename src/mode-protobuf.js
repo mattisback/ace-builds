@@ -103,6 +103,7 @@ var c_cppHighlightRules = function() {
           + /(\.((-?\d+)|\*(-?\d+\$)?)?)?/.source // precision
           + /(hh|h|ll|l|j|t|z|q|L|vh|vl|v|hv|hl)?/.source // length modifier
           + /(\[[^"\]]+\]|[diouxXDOUeEfFgGaACcSspn%])/.source; // conversion type
+
     this.$rules = { 
         "start" : [
             {

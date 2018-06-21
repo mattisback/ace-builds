@@ -23,6 +23,7 @@ var CssHighlightRules = function() {
         "support.constant.color": supportConstantColor,
         "support.constant.fonts": supportConstantFonts
     }, "text", true);
+
     this.$rules = {
         "start" : [{
             include : ["strings", "url", "comments"]
@@ -200,6 +201,7 @@ var TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
 var CssHighlightRules = require("./css_highlight_rules");
 
 var StylusHighlightRules = function() {
+
     var keywordMapper = this.createKeywordMapper({
         "support.type": CssHighlightRules.supportType,
         "support.function": CssHighlightRules.supportFunction,

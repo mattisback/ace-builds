@@ -447,8 +447,8 @@ var optionGroups = {
             path: "wrap",
             items: [
                { caption : "Off",  value : "off" },
-               { caption : "Free", value : "free" },
-               { caption : "80",   value : "80" },
+               { caption : "View", value : "free" },
+               { caption : "margin", value : "printMargin" },
                { caption : "40",   value : "40" }
             ]
         },
@@ -518,6 +518,15 @@ var optionGroups = {
         },
         "Show Gutter": {
             path: "showGutter"
+        },
+        "Show Line Numbers": {
+            path: "showLineNumbers"
+        },
+        "Relative Line Numbers": {
+            path: "relativeLineNumbers"
+        },
+        "Fixed Gutter Width": {
+            path: "fixedWidthGutter"
         },
         "Show Print Margin": [{
             path: "showPrintMargin"

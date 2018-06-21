@@ -23,6 +23,7 @@ var CssHighlightRules = function() {
         "support.constant.color": supportConstantColor,
         "support.constant.fonts": supportConstantFonts
     }, "text", true);
+
     this.$rules = {
         "start" : [{
             include : ["strings", "url", "comments"]
@@ -216,7 +217,9 @@ var LessHighlightRules = function() {
         "support.constant.color": CssHighlightRules.supportConstantColor,
         "support.constant.fonts": CssHighlightRules.supportConstantFonts
     }, "identifier", true);   
+
     var numRe = "\\-?(?:(?:[0-9]+)|(?:[0-9]*\\.[0-9]+))";
+
     this.$rules = {
         "start" : [
             {

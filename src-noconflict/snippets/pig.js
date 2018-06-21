@@ -1,7 +1,7 @@
-ace.define("ace/snippets/pig",[], function(require, exports, module) {
+ace.define("ace/snippets/pig",["require","exports","module"], function(require, exports, module) {
 "use strict";
 
-exports.snippetText = "";
+exports.snippetText =undefined;
 exports.scope = "pig";
 
 });

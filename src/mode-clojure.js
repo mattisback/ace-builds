@@ -90,6 +90,7 @@ var ClojureHighlightRules = function() {
         "constant.language": buildinConstants,
         "support.function": builtinFunctions
     }, "identifier", false, " ");
+
     this.$rules = {
         "start" : [
             {

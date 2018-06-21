@@ -5,6 +5,7 @@ var oop = require("../lib/oop");
 var TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
 
 var ElixirHighlightRules = function() {
+
     this.$rules = { start: 
        [ { token: 
             [ 'meta.module.elixir',

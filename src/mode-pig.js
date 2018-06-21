@@ -5,6 +5,7 @@ var oop = require("../lib/oop");
 var TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
 
 var PigHighlightRules = function() {
+
     this.$rules = {
         start: [{
             token: "comment.block.pig",

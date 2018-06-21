@@ -62,6 +62,7 @@ var scadHighlightRules = function() {
         "keyword": "module|if|else|for",
         "constant.language": "NULL"
     }, "identifier");
+
     this.$rules = {
         "start" : [
             {

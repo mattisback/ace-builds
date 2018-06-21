@@ -170,7 +170,6 @@ function setupContainer(element, getValue) {
 
     var parentNode = element.parentNode;
     var container = document.createElement('div');
-    //
     var resizeEvent = function() {
         var style = 'position:relative;';
         [
@@ -212,8 +211,6 @@ exports.transformTextarea = function(element, options) {
     });
     element.style.display = 'none';
     container.style.background = 'white';
-
-    //
     var editorDiv = document.createElement("div");
     applyStyles(editorDiv, {
         top: "0px",

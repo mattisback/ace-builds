@@ -43,6 +43,7 @@ var PerlHighlightRules = function() {
         "constant.language": buildinConstants,
         "support.function": builtinFunctions
     }, "identifier");
+
     this.$rules = {
         "start" : [
             {

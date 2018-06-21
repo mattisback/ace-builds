@@ -39,8 +39,77 @@ counter-reset: ace_line;\
 var config = require("../config");
 var dom = require("../lib/dom");
 
+var simpleDom = {
+    createTextNode: function(textContent) {
+        return textContent;
+    },
+    createElement: function(type) {
+        var element = {
+            type: type,
+            style: {},
+            childNodes: [],
+            appendChild: function(child) {
+                element.childNodes.push(child);
+            },
+            toString: function() {
+                var internal = {
+                    type: 1,
+                    style: 1,
+                    className: 1,
+                    textContent: 1,
+                    childNodes: 1,
+                    appendChild: 1,
+                    toString: 1
+                };
+                var stringBuilder = [];
+                
+                if (element.type != "fragment") {
+                    stringBuilder.push("<", element.type);
+                    if (element.className)
+                        stringBuilder.push(" class='", element.className, "'");
+                    var styleStr = [];
+                    for (var key in element.style) {
+                        styleStr.push(key, ":", element.style[key]);
+                    }
+                    if (styleStr.length)
+                        stringBuilder.push(" style='", styleStr.join(""), "'");
+                    for (var key in element) {
+                        if (!internal[key]) {
+                            stringBuilder.push(" ", key, "='", element[key], "'");
+                        }
+                    }
+                    stringBuilder.push(">");
+                }
+                
+                if (element.textContent) {
+                    stringBuilder.push(element.textContent);
+                } else {
+                    for (var i=0; i<element.childNodes.length; i++) {
+                        var child = element.childNodes[i];
+                        if (typeof child == "string")
+                            stringBuilder.push(child);
+                        else
+                            stringBuilder.push(child.toString());
+                    }
+                }
+                
+                if (element.type != "fragment") {
+                    stringBuilder.push("</", element.type, ">");
+                }
+                
+                return stringBuilder.join("");
+            }
+        };
+        return element;
+    },
+    createFragment: function() {
+        return this.createElement("fragment");
+    }
+};
+
 var SimpleTextLayer = function() {
     this.config = {};
+    this.dom = simpleDom;
 };
 SimpleTextLayer.prototype = TextLayer.prototype;
 
@@ -125,29 +194,35 @@ highlight.renderSync = function(input, mode, theme, lineStart, disableGutter) {
     textLayer.setSession(session);
 
     session.setValue(input);
-
-    var stringBuilder = [];
     var length =  session.getLength();
+    
+    var outerEl = simpleDom.createElement("div");
+    outerEl.className = theme.cssClass;
+    
+    var innerEl = simpleDom.createElement("div");
+    innerEl.className = "ace_static_highlight" + (disableGutter ? "" : " ace_show_gutter");
+    innerEl.style["counter-reset"] = "ace_line " + (lineStart - 1);
+    outerEl.appendChild(innerEl);
 
-    for(var ix = 0; ix < length; ix++) {
-        stringBuilder.push("<div class='ace_line'>");
-        if (!disableGutter)
-            stringBuilder.push("<span class='ace_gutter ace_gutter-cell' unselectable='on'>" + /*(ix + lineStart) + */ "</span>");
-        textLayer.$renderLine(stringBuilder, ix, true, false);
-        stringBuilder.push("\n</div>");
+    for (var ix = 0; ix < length; ix++) {
+        var lineEl = simpleDom.createElement("div");
+        lineEl.className = "ace_line";
+        
+        if (!disableGutter) {
+            var gutterEl = simpleDom.createElement("span");
+            gutterEl.className ="ace_gutter ace_gutter-cell";
+            gutterEl.unselectable ="on";
+            gutterEl.textContent = "";
+            lineEl.appendChild(gutterEl);
+        }
+        textLayer.$renderLine(lineEl, ix, false);
+        innerEl.appendChild(lineEl);
     }
-    var html = "<div class='" + theme.cssClass + "'>" +
-        "<div class='ace_static_highlight" + (disableGutter ? "" : " ace_show_gutter") +
-            "' style='counter-reset:ace_line " + (lineStart - 1) + "'>" +
-            stringBuilder.join("") +
-        "</div>" +
-    "</div>";
-
     textLayer.destroy();
 
     return {
         css: baseStyles + theme.cssText,
-        html: html,
+        html: outerEl.toString(),
         session: session
     };
 };

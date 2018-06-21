@@ -97,6 +97,7 @@ var PowershellHighlightRules = function() {
         "is|isnot|as|" +
         "shl|shr"
     );
+
     this.$rules = {
         "start" : [
             {
